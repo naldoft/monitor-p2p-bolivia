@@ -1,18 +1,21 @@
 name: Actualizar Precios P2P
 on:
   schedule:
-    - cron: '*/15 * * * *' # Cada 15 minutos
-  workflow_dispatch: # Permite ejecutarlo manualmente para probar
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       
       - name: Configurar Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.9'
           
@@ -27,5 +30,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add data.csv
-          git commit -m "Actualización de precios: $(date)"
-          git push
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Actualización de precios" && git push)
