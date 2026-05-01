@@ -36,7 +36,7 @@ def actualizar_csv():
     fecha = datetime.now(tz).strftime("%d/%m/%Y %H:%M:%S")
     
     # Formateo idéntico a tu imagen: "15,24"
-    def fmt(n): return f'"{str(n).replace(".", ",")}"'
+    def fmt(n): return str(n).replace(".", ",")
     
     nueva_fila = [fecha, fmt(6.86), fmt(6.96), fmt(p_compra), fmt(p_venta)]
     
